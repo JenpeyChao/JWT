@@ -1,8 +1,9 @@
 package com.example.JWT.Services;
 
+import com.example.JWT.Entity.Users;
 import com.example.JWT.Repository.UserDAO;
 
-import org.apache.catalina.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,12 +22,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userDAO.findByUsername(username);
-        return user.map(UsersDetail::new).orElseThrow(()->new UsernameNotFoundException("User Does Not Exist"));
+        Optional<Users> users = userDAO.findByUsername(username);
+        return users.map(UsersDetail::new).orElseThrow(()->new UsernameNotFoundException("User Does Not Exist"));
     }
-    public String addUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        this.userDAO.save(user);
+    public String addUser(Users users){
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
+        this.userDAO.save(users);
         return "User added";
 
     }
