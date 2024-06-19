@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
@@ -19,7 +21,8 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        Optional<User> user = userDAO.findByUsername(username);
+        return user.map(UsersDetail::new).orElseThrow(()->new UsernameNotFoundException("User Does Not Exist"));
     }
     public String addUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
