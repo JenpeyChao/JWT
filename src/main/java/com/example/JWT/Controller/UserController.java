@@ -34,14 +34,14 @@ public class UserController {
         return userService.addUser(users);
     }
 
-    @GetMapping("/user/userProfile")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @GetMapping("/student/studentProfile")
+    @PreAuthorize("hasAuthority('STUDENT')")
     public String userProfile() {
-        return "Welcome to User Profile";
+        return "Welcome to STUDENT Profile";
     }
 
     @GetMapping("/admin/adminProfile")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String adminProfile() {
         return "Welcome to Admin Profile";
     }
